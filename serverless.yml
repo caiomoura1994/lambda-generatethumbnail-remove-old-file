@@ -17,7 +17,7 @@ functions:
     events:
       - schedule: rate(1 day)
   compressHandler:
-    handler: compressFile.handler
+    handler: createThumbnailFile.handler
     events:
       - s3:
           bucket: ${provider.BUCKET_NAME}
