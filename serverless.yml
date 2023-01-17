@@ -1,0 +1,26 @@
+org: caiomoura1994
+app: aws-node-scheduled-cron-project
+service: aws-node-scheduled-cron-project
+
+frameworkVersion: '3'
+
+
+provider:
+  name: aws
+  BUCKET_NAME: bucket-test
+  TEMP_BUCKET_NAME: bucket-test
+  runtime: nodejs14.x
+
+functions:
+  rateHandler:
+    handler: deleteOldFiles.handler
+    events:
+      - schedule: rate(1 day)
+  compressHandler:
+    handler: compressFile.handler
+    events:
+      - s3:
+          bucket: ${provider.BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          existing: true
+          
